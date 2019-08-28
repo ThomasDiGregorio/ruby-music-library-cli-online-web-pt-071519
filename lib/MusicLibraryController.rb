@@ -1,3 +1,4 @@
+require 'pry'
 class MusicLibraryController
     def initialize(path = "./db/mp3s")
         MusicImporter.new(path).import
@@ -41,8 +42,15 @@ class MusicLibraryController
         def list_songs_by_artist
             puts "Please enter the name of an artist:"
             input = gets.strip
-            puts 
+            artist = Artist.find_by_name(input)
+            if artist
+             #"error message" 
+            #else 
+            sorted = artist.songs.sort  { |a, b| a.name <=> b.name }.each_with_index do |song, idx|
+                puts "#{idx + 1}. #{song.artist.name} - #{song.genre.name}"
+            end
         end
+    end           
     end 
     
     
